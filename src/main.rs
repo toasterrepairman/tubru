@@ -35,7 +35,7 @@ fn main() {
         .below_of(&link_input, WIDGET_PADDING)
         .with_label("download");
     download.emit(sender, Message::DownloadReady);
-
+ 
     let mut status = SimpleTerminal::default()
         .with_size(WIDGET_WIDTH + WIDGET_PADDING, WIDGET_HEIGHT)
         .right_of(&download, WIDGET_PADDING);
@@ -50,11 +50,6 @@ fn main() {
     download.set_label_size(32);
 
     wind.set_color(Color::from_u32(0x353c4a));
-
-
-    async fn get_video(link: String) {
-
-    }
 
     wind.end();
     wind.show();
@@ -74,13 +69,7 @@ fn main() {
 
                 let link: String = link_input.value();
 
-                /*
-
-                status.set_text(|download_loc|{
-                    download_loc = rustube::download_best_quality(&link).await.unwrap()
-                });
-
-                */
+                video_downloadfn(&link);
 
                 link_input.emit(sender, Message::DownloadFinished);
             }
@@ -90,4 +79,9 @@ fn main() {
             None => {}
         }
     }
+}
+
+async fn video_downloadfn(vidLink: &str) -> String { 
+    let download_loc = rustube::download_best_quality(&vidLink).await.unwrap();
+    return download_loc.into_os_string().into_string().unwrap();
 }
