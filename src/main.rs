@@ -2,9 +2,13 @@ use fltk::{app::*, enums::*, frame::*, input::*, prelude::*, button::*, window::
 use rustube;
 use fltk::text::{TextBuffer, SimpleTerminal};
 
+// imported fltk and rustube dependencies
+
 const WIDGET_HEIGHT: i32 = 50;
 const WIDGET_PADDING: i32 = 10;
 const WIDGET_WIDTH: i32 = 200;
+
+// establish widget dimensions
 
 #[derive(Clone, Copy)]
 enum Message {
@@ -12,6 +16,8 @@ enum Message {
     DownloadReady,
     DownloadFinished,
 }
+
+// create state enums
 
 fn main() {
     let app = App::default().with_scheme(Scheme::Gtk);
@@ -68,13 +74,13 @@ fn main() {
                 status.set_text("Download in progress...");
 
                 let link: String = link_input.value();
-
+                
                 video_downloadfn(&link);
 
                 link_input.emit(sender, Message::DownloadFinished);
             }
             Some(Message::DownloadFinished) => {
-
+                // empty for now
             }
             None => {}
         }
